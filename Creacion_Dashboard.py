@@ -1,6 +1,5 @@
 # 1° Ingreso de módulos
 import streamlit as st #pip install streamlit
-st.write("******HOLAALALALLAA**/******")
 
 import os
 import pandas as pd #pip install pandas
@@ -31,7 +30,8 @@ name_excel='Registros.xlsx' #Ingrese el nombre del excel con extensión.
 # 3° Nombres de la página web.
 st.set_page_config(page_title = title_page_web, #Nombre de la pagina, sale arriba cuando se carga streamlit
                    page_icon = '\u26A1', # https://www.webfx.com/tools/emoji-cheat-sheet/
-                   layout="wide")
+                   layout="wide",
+                   base="https://www.webfx.com/tools/emoji-cheat-sheet/")
 
 st.title(title_portada)
 st.subheader(name_empresa)
