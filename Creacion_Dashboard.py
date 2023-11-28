@@ -1,7 +1,9 @@
 # Instalación de módulos
 import pip
+pip.main(["install","plotly"])
 pip.main(["install","plotly.express"])
 pip.main(["install","openpyxl"])
+
 
 
 # 1° Ingreso de módulos
