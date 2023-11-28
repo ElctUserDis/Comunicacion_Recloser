@@ -1,7 +1,7 @@
 # 1° Ingreso de módulos
 import os
 import pandas as pd #pip install pandas
-# import plotly.express as px #pip install plotly-express
+import plotly.express as px #pip install plotly-express
 import streamlit as st #pip install streamlit
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
