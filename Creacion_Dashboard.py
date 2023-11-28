@@ -318,20 +318,22 @@ if selected_tab == "1- Por fecha.":
         with col1:
             conteos_marcas.reset_index(drop=True, inplace=True)
             conteos_marcas.index = conteos_marcas.index + 1  # Hacer que la primera fila no sea "0"
-            with st.expander("Marca_ViewData"):
-                st.write(conteos_marcas.style.background_gradient(cmap="Greens"))# Imprimir la tabla.
-                # # Descargar la tabla en formato csv
-                # csvMarca = conteos_marcas.to_csv(index=False).encode('utf-8')  # Corregir aquí
-                # st.download_button("Download Data", data=csvMarca, file_name="Marca-DATA.csv", mime="text/csv")
+            st.write(conteos_marcas)
+            # with st.expander("Marca_ViewData"):
+            #     st.write(conteos_marcas.style.background_gradient(cmap="Greens"))# Imprimir la tabla.
+            #     # Descargar la tabla en formato csv
+            #     csvMarca = conteos_marcas.to_csv(index=False).encode('utf-8')  # Corregir aquí
+            #     st.download_button("Download Data", data=csvMarca, file_name="Marca-DATA.csv", mime="text/csv")
             # 6.2.2: Creación de la tabla del diagrama de pastel (Recloser por UN)
         with col2:
             grouped_2.reset_index(drop=True)
             grouped_2=grouped_2.drop(columns=['UNIDAD DE NEGOCIO']) #Eliminar la columna, unidad de negocio
-            with st.expander("Unidad de negocio_ViewData"):
-                st.write(grouped_2.style.background_gradient(cmap="Greens"))# Imprimir la tabla.
-                # # Descargar la tabla en formato csv
-                # csvUN = grouped_2.to_csv(index=False).encode('utf-8')  # Corregir aquí
-                # st.download_button("Download Data", data=csvUN, file_name="Unidad_Negocio-DATA.csv", mime="text/csv")
+            st.write(grouped_2)
+            # with st.expander("Unidad de negocio_ViewData"):
+            #     st.write(grouped_2.style.background_gradient(cmap="Greens"))# Imprimir la tabla.
+            #     # Descargar la tabla en formato csv
+            #     csvUN = grouped_2.to_csv(index=False).encode('utf-8')  # Corregir aquí
+            #     st.download_button("Download Data", data=csvUN, file_name="Unidad_Negocio-DATA.csv", mime="text/csv")
 
         #******************************************************************************************************************************************************************************************************************
         #******************************************************************************************************************************************************************************************************************
