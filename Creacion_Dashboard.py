@@ -8,6 +8,11 @@ import plotly.graph_objects as go
 import plotly.subplots as sp
 import openpyxl
 
+# Instalación de módulos
+import pip
+pip.main(["install","plotly-express"])
+pip.main(["install","openpyxl"])
+
 # 2° Ingreso de valores
 title_page_web='Recloser' #Título del Dashboard
 title_portada='🖥️ Recloser|Respuesta|Comunicación' #Título del Dashboard
