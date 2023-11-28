@@ -42,7 +42,7 @@ st.sidebar.markdown("---")# Insertar una línea horizontal
 if selected_tab == "1- Por fecha.":
     # 4° Abre el libro de Excel "Registros.xlsx"
     direc_actual = os.path.dirname(os.path.abspath(__file__))# Ruta del directorio actual del script  
-    direc=name_excel
+    direc="Registros.xlsx"
 
     workbook = openpyxl.load_workbook(direc)
     sheet_names = []# Lista que almacenará los nombres de las hojas
