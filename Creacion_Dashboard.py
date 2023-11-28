@@ -42,7 +42,7 @@ st.sidebar.markdown("---")# Insertar una línea horizontal
 if selected_tab == "1- Por fecha.":
     # 4° Abre el libro de Excel "Registros.xlsx"
     direc_actual = os.path.dirname(os.path.abspath(__file__))# Ruta del directorio actual del script  
-    direc='Registros.xlsx'
+    direc="Registros.xlsx"
 
     workbook = openpyxl.load_workbook(direc)
     sheet_names = []# Lista que almacenará los nombres de las hojas
@@ -318,8 +318,8 @@ if selected_tab == "1- Por fecha.":
         with col1:
             conteos_marcas.reset_index(drop=True, inplace=True)
             conteos_marcas.index = conteos_marcas.index + 1  # Hacer que la primera fila no sea "0"
-            st.write(conteos_marcas)
             with st.expander("Marca_ViewData"):
+                st.write(conteos_marcas)
                 # # st.write(conteos_marcas.style.background_gradient(cmap="Greens"))# Imprimir la tabla.
                 # Descargar la tabla en formato csv
                 csvMarca = conteos_marcas.to_csv(index=False).encode('utf-8')  # Corregir aquí
@@ -328,8 +328,8 @@ if selected_tab == "1- Por fecha.":
         with col2:
             grouped_2.reset_index(drop=True)
             grouped_2=grouped_2.drop(columns=['UNIDAD DE NEGOCIO']) #Eliminar la columna, unidad de negocio
-            st.write(grouped_2)
             with st.expander("Unidad de negocio_ViewData"):
+                st.write(grouped_2)
                 # # st.write(grouped_2.style.background_gradient(cmap="Greens"))# Imprimir la tabla.
                 # Descargar la tabla en formato csv
                 csvUN = grouped_2.to_csv(index=False).encode('utf-8')  # Corregir aquí
@@ -407,8 +407,8 @@ if selected_tab == "1- Por fecha.":
             summary_df1 = grouped_1.reset_index()  # Reiniciar el índice del DataFrame
             summary_df1.index = summary_df1.index + 1  # Hacer que la primera fila sea "1" en lugar de "0"
             st.write(summary_df1)
-            # st.write(summary_df1.style.background_gradient(cmap="Purples"))  # Imprimir la tabla.
-                        
+
+            # # st.write(summary_df1.style.background_gradient(cmap="Purples"))  # Imprimir la tabla.
             # Descargar la tabla en formato csv
             csvSE = summary_df1.to_csv(index=False).encode('utf-8')  # Corregir aquí
             st.download_button("Download Data", data=csvSE, file_name="Subestaciones-DATA.csv", mime="text/csv")
@@ -490,8 +490,7 @@ if selected_tab == "1- Por fecha.":
             summary_df = grouped.reset_index()  # Reiniciar el índice del DataFrame
             summary_df.index = summary_df.index + 1  # Hacer que la primera fila sea "1" en lugar de "0"
             st.write(summary_df)
-            # st.write(summary_df.style.background_gradient(cmap="Reds"))  # Imprimir la tabla.
-                        
+            # # st.write(summary_df.style.background_gradient(cmap="Reds"))  # Imprimir la tabla.
             # Descargar la tabla en formato csv
             csvAMT = summary_df.to_csv(index=False).encode('utf-8')  # Corregir aquí
             st.download_button("Download Data", data=csvAMT, file_name="Alimentador-DATA.csv", mime="text/csv")
