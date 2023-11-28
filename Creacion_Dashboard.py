@@ -406,11 +406,12 @@ if selected_tab == "1- Por fecha.":
         with st.expander("Subestaciones_ViewData"):
             summary_df1 = grouped_1.reset_index()  # Reiniciar el índice del DataFrame
             summary_df1.index = summary_df1.index + 1  # Hacer que la primera fila sea "1" en lugar de "0"
-            st.write(summary_df1.style.background_gradient(cmap="Purples"))  # Imprimir la tabla.
+            st.write(summary_df1)
+            # st.write(summary_df1.style.background_gradient(cmap="Purples"))  # Imprimir la tabla.
                         
-            # Descargar la tabla en formato csv
-            csvSE = summary_df1.to_csv(index=False).encode('utf-8')  # Corregir aquí
-            st.download_button("Download Data", data=csvSE, file_name="Subestaciones-DATA.csv", mime="text/csv")
+            # # Descargar la tabla en formato csv
+            # csvSE = summary_df1.to_csv(index=False).encode('utf-8')  # Corregir aquí
+            # st.download_button("Download Data", data=csvSE, file_name="Subestaciones-DATA.csv", mime="text/csv")
 
         #******************************************************************************************************************************************************************************************************************
         #******************************************************************************************************************************************************************************************************************
