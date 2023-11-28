@@ -319,21 +319,21 @@ if selected_tab == "1- Por fecha.":
             conteos_marcas.reset_index(drop=True, inplace=True)
             conteos_marcas.index = conteos_marcas.index + 1  # Hacer que la primera fila no sea "0"
             st.write(conteos_marcas)
-            # with st.expander("Marca_ViewData"):
-            #     st.write(conteos_marcas.style.background_gradient(cmap="Greens"))# Imprimir la tabla.
-            #     # Descargar la tabla en formato csv
-            #     csvMarca = conteos_marcas.to_csv(index=False).encode('utf-8')  # Corregir aquí
-            #     st.download_button("Download Data", data=csvMarca, file_name="Marca-DATA.csv", mime="text/csv")
+            with st.expander("Marca_ViewData"):
+                # # st.write(conteos_marcas.style.background_gradient(cmap="Greens"))# Imprimir la tabla.
+                # Descargar la tabla en formato csv
+                csvMarca = conteos_marcas.to_csv(index=False).encode('utf-8')  # Corregir aquí
+                st.download_button("Download Data", data=csvMarca, file_name="Marca-DATA.csv", mime="text/csv")
             # 6.2.2: Creación de la tabla del diagrama de pastel (Recloser por UN)
         with col2:
             grouped_2.reset_index(drop=True)
             grouped_2=grouped_2.drop(columns=['UNIDAD DE NEGOCIO']) #Eliminar la columna, unidad de negocio
             st.write(grouped_2)
-            # with st.expander("Unidad de negocio_ViewData"):
-            #     st.write(grouped_2.style.background_gradient(cmap="Greens"))# Imprimir la tabla.
-            #     # Descargar la tabla en formato csv
-            #     csvUN = grouped_2.to_csv(index=False).encode('utf-8')  # Corregir aquí
-            #     st.download_button("Download Data", data=csvUN, file_name="Unidad_Negocio-DATA.csv", mime="text/csv")
+            with st.expander("Unidad de negocio_ViewData"):
+                # # st.write(grouped_2.style.background_gradient(cmap="Greens"))# Imprimir la tabla.
+                # Descargar la tabla en formato csv
+                csvUN = grouped_2.to_csv(index=False).encode('utf-8')  # Corregir aquí
+                st.download_button("Download Data", data=csvUN, file_name="Unidad_Negocio-DATA.csv", mime="text/csv")
 
         #******************************************************************************************************************************************************************************************************************
         #******************************************************************************************************************************************************************************************************************
@@ -489,7 +489,8 @@ if selected_tab == "1- Por fecha.":
         with st.expander("Alimentador_ViewData"):
             summary_df = grouped.reset_index()  # Reiniciar el índice del DataFrame
             summary_df.index = summary_df.index + 1  # Hacer que la primera fila sea "1" en lugar de "0"
-            st.write(summary_df.style.background_gradient(cmap="Reds"))  # Imprimir la tabla.
+            st.write(summary_df)
+            # st.write(summary_df.style.background_gradient(cmap="Reds"))  # Imprimir la tabla.
                         
             # Descargar la tabla en formato csv
             csvAMT = summary_df.to_csv(index=False).encode('utf-8')  # Corregir aquí
