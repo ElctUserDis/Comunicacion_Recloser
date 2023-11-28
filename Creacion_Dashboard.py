@@ -42,7 +42,7 @@ st.sidebar.markdown("---")# Insertar una línea horizontal
 if selected_tab == "1- Por fecha.":
     # 4° Abre el libro de Excel "Registros.xlsx"
     direc_actual = os.path.dirname(os.path.abspath(__file__))# Ruta del directorio actual del script  
-    direc="Registros.xlsx"
+    direc='Registros.xlsx'
 
     workbook = openpyxl.load_workbook(direc)
     sheet_names = []# Lista que almacenará los nombres de las hojas
@@ -203,7 +203,8 @@ if selected_tab == "1- Por fecha.":
         filtered_df_reinicio.index = filtered_df_reinicio.index + 1 #Hacer que primera fila no sea "0"
 
             # TABLA
-        st.write(filtered_df_reinicio.style.background_gradient(cmap="Oranges"))# Imprimir la tabla.
+        st.write(filtered_df_reinicio)
+        # # st.write(filtered_df_reinicio.style.background_gradient(cmap="Oranges"))# Imprimir la tabla.
         # Descargar la tabla en formato csv
         csvRES = filtered_df_reinicio.to_csv(index=False).encode('utf-8')  # Corregir aquí
         st.download_button("Download Data", data=csvRES, file_name="Tabla_Datos-DATA.csv", mime="text/csv")
