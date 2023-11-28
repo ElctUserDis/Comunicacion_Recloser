@@ -409,9 +409,9 @@ if selected_tab == "1- Por fecha.":
             st.write(summary_df1)
             # st.write(summary_df1.style.background_gradient(cmap="Purples"))  # Imprimir la tabla.
                         
-            # # Descargar la tabla en formato csv
-            # csvSE = summary_df1.to_csv(index=False).encode('utf-8')  # Corregir aquí
-            # st.download_button("Download Data", data=csvSE, file_name="Subestaciones-DATA.csv", mime="text/csv")
+            # Descargar la tabla en formato csv
+            csvSE = summary_df1.to_csv(index=False).encode('utf-8')  # Corregir aquí
+            st.download_button("Download Data", data=csvSE, file_name="Subestaciones-DATA.csv", mime="text/csv")
 
         #******************************************************************************************************************************************************************************************************************
         #******************************************************************************************************************************************************************************************************************
