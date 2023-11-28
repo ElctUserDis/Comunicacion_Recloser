@@ -1,6 +1,5 @@
 # Instalación de módulos
 import pip
-import pip
 
 # Instalar pandas
 pip.main(['install', 'pandas'])
@@ -20,12 +19,10 @@ pip.main(['install', 'plotly'])
 # Instalar openpyxl
 pip.main(['install', 'openpyxl'])
 
-
-
 # 1° Ingreso de módulos
 import os
 import pandas as pd #pip install pandas
-import plotly.express as px #pip install plotly-express
+# import plotly.express as px #pip install plotly-express
 import streamlit as st #pip install streamlit
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
