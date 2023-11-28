@@ -1,5 +1,2 @@
-streamlit==1.28.0
-matplotlib==1.5.1
+streamlit==1.18.0
 plotly==5.17.0
-openpyxl
-subprocess.run
