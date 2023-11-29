@@ -32,7 +32,7 @@ st.set_page_config(page_title = title_page_web, #Nombre de la pagina, sale arrib
 
 st.title(title_portada)
 st.subheader(name_empresa)
-st.subheader("**Elaborado por: Samuel D. Chuco Aliano",font_size=20)
+st.subheader("_Elaborado por_: :blue[Samuel D. Chuco Aliano] 👷", divider='rainbow') #_ _: Cursiva.
 st.markdown('##') #Para separar el titulo de los KPIs, se inserta un paragrafo usando un campo de markdown
 
 # Menú lateral con las pestañas
@@ -513,4 +513,4 @@ if selected_tab == "1- Por fecha.":
         st.markdown(f"....(Espera)")
 
 elif selected_tab == "2- Por periodo.":
-    st.header("otro")
+    st.header("¡UPS!, Esta pestaña se encuentra en actualizacion.")
