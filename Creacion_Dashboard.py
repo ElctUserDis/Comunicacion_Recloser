@@ -11,7 +11,7 @@ import openpyxl
 # 2° Ingreso de valores
 title_page_web='Recloser' #Título del Dashboard
 title_portada='🖥️ Recloser|Respuesta|Comunicación' #Título del Dashboard
-name_empresa='Consorcio CASCADE' #Título del Dashboard
+name_empresa='Empresa Electrocentro S.A.' #Título de la empresa
 
 ancho_tabla_datos="1000px"
 alto_tabla_datos="400px"
@@ -32,6 +32,7 @@ st.set_page_config(page_title = title_page_web, #Nombre de la pagina, sale arrib
 
 st.title(title_portada)
 st.subheader(name_empresa)
+st.subheader("Elaborado por: Samuel D. Chuco Aliano")
 st.markdown('##') #Para separar el titulo de los KPIs, se inserta un paragrafo usando un campo de markdown
 
 # Menú lateral con las pestañas
