@@ -32,7 +32,7 @@ st.set_page_config(page_title = title_page_web, #Nombre de la pagina, sale arrib
 
 st.title(title_portada)
 st.subheader(name_empresa)
-st.subheader("Elaborado por: Samuel D. Chuco Aliano")
+st.subheader("**Elaborado por: Samuel D. Chuco Aliano",font_size=20)
 st.markdown('##') #Para separar el titulo de los KPIs, se inserta un paragrafo usando un campo de markdown
 
 # Menú lateral con las pestañas
@@ -431,7 +431,6 @@ if selected_tab == "1- Por fecha.":
         
         fig_rpta_interm = sp.make_subplots(rows=n_row_AMT, cols=n_column_AMT, column_widths=l_column_widths_AMT, row_heights=l_row_heights_AMT, vertical_spacing=0.2, horizontal_spacing=0.2)#, subplot_titles=['Subplot 1', 'Subplot 2', ...])
 
-
         # Agregar los gráficos a cada subsubplot
         grouped_aux = grouped.sort_values(by='Nro de respuestas', ascending=True).copy()
         total_filas_grouped_aux = len(grouped_aux)
@@ -444,7 +443,6 @@ if selected_tab == "1- Por fecha.":
         lista_valores = [division_entera] * n_fig_AMT
         lista_valores[-1] += residuo
 
-
         indice_inicial = 0
         for i in range(n_fig_AMT):
             col_idx = i % 2 + 1
@@ -456,7 +454,6 @@ if selected_tab == "1- Por fecha.":
             # Crea un nuevo DataFrame copiando las filas correspondientes
             df_aux = grouped.iloc[indice_inicial:limite_superior].copy()
             df_aux = df_aux.sort_values(by='Nro de intermitencias', ascending=True) # Ordenar en orden: (True)-Ascendente ; (False)-Descendente
-            # Puedes imprimir df_aux o realizar cualquier otra operación con él aquí
             
             # Actualiza el índice inicial para el próximo ciclo
             indice_inicial = limite_superior
