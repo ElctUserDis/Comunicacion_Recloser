@@ -255,7 +255,7 @@ if selected_tab == "1- Por fecha.":
                         template="seaborn")
                 # Configuración para mostrar el texto encima de las barras y con tamaño 24
             fig.update_traces(textposition='outside', textfont_size=15) # Config. de las etiquetas de las barras.
-            fig.update_layout(xaxis=dict(tickangle=-45, tickfont=dict(size=15)),yaxis_range=[0, 240]) # Config. texto del eje "X"
+            fig.update_layout(xaxis=dict(tickangle=-45, tickfont=dict(size=15)),yaxis_range=[0, 245]) # Config. texto del eje "X"
             st.plotly_chart(fig, use_container_width=True, height=200)
 
             # 6.1.2° Agrupar por 'UNIDAD DE NEGOCIO' => "Nro de recloser instalados"----------------->DIAGRAMA DE PASTEL
