@@ -32,7 +32,8 @@ st.set_page_config(page_title = title_page_web, #Nombre de la pagina, sale arrib
 
 st.title(title_portada)
 st.subheader(name_empresa)
-st.subheader("_Elaborado por_: :blue[Samuel D. Chuco Aliano] 👷") #_ _: Cursiva.
+st.subheader("_Elaborado por_: :blue[S.D.C.A] 👷")#, divider='rainbow')
+
 st.markdown('##') #Para separar el titulo de los KPIs, se inserta un paragrafo usando un campo de markdown
 
 # Menú lateral con las pestañas
@@ -147,7 +148,6 @@ if selected_tab == "1- Por fecha.":
         amt_options = df['AMT'].unique()
         amt = amt_options
 
-
     # 5.4 Filtra el DataFrame en función de las selecciones:
     filtered_df_UN = df[
         (df['DEPARTAMENTO'].isin(dpto)) &
@@ -182,7 +182,8 @@ if selected_tab == "1- Por fecha.":
         selected_columns = st.multiselect(
             "Seleccione el(los) campo(s) a mostrar:",
             options=['Seleccionar todo'] + filtered_df_reinicio.columns[6:-2].tolist(), #Excluir las columnas que lo pondremos por defecto
-            default=[], 
+            default=[],
+            #filtered_df_reinicio.columns[0:3].tolist()+filtered_df_reinicio.columns[9:11].tolist()+filtered_df_reinicio.columns[15:].tolist()
         )
 
         if 'Seleccionar todo' in selected_columns and len(selected_columns) > 1:
@@ -223,10 +224,38 @@ if selected_tab == "1- Por fecha.":
 
         # Cuenta los que no tienen comunicación, pero sí tienen respuesta
     si_comunicacion = filtered_df['Comunicación actual'].value_counts().get('Si', 0)
-    no_comunicacion = filtered_df[filtered_df['Rpta actual'] == 'Si']['Comunicación actual'].value_counts().get('No', 0)
+    no_comunicacion = si_rpta-si_comunicacion
 
     # Impresión de KPIs
-    st.markdown(f"<p style='font-size: 24px; text-align: center; font-weight: bold;'>Recloser instalados: {total_rpta}</p>", unsafe_allow_html=True)
+        # CONTEO DE RECLOSER APTOS
+    lista_recloser=["NOJA","NOJA Power","Schneider","JinkWang","ENTEC","S&C","ABB","SEL"]
+    conteos_marcas = df['MARCA'].value_counts().reset_index()
+
+    conteos_marcas = conteos_marcas[conteos_marcas['MARCA'].isin(lista_recloser)]
+
+    nuevos_nombres = {"MARCA": "Marca", "count": "Total"}
+    conteos_marcas.rename(columns=nuevos_nombres, inplace=True)
+
+    no_conteo_SC = df.loc[df['MARCA'] == 'S&C', 'SECC.GIS NUEVO'].eq("--").sum()
+    conteo_ABB=df.loc[df['MARCA']=='ABB','CONTROLADOR'].eq("PCD2000R").sum()
+    conteo_SEL=df.loc[df['MARCA']=='SEL','CONTROLADOR'].eq("SEL-351R").sum()
+
+    total_SC = conteos_marcas.loc[conteos_marcas['Marca'] == 'S&C', 'Total'].values[0]
+    total_ABB = conteos_marcas.loc[conteos_marcas['Marca'] == 'ABB', 'Total'].values[0]
+
+    total_NOJA = conteos_marcas.loc[conteos_marcas['Marca'] == 'NOJA', 'Total'].values[0]
+    total_NOJA_Power = conteos_marcas.loc[conteos_marcas['Marca'] == 'NOJA Power', 'Total'].values[0]
+
+    conteos_marcas.loc[conteos_marcas['Marca'] == 'S&C', 'Total']=total_SC-no_conteo_SC
+    conteos_marcas.loc[conteos_marcas['Marca'] == 'ABB', 'Total']=conteo_ABB
+    conteos_marcas.loc[conteos_marcas['Marca'] == 'SEL', 'Total']=conteo_SEL
+    conteos_marcas.loc[conteos_marcas['Marca'] == 'NOJA', 'Total']=total_NOJA+total_NOJA_Power
+
+    conteos_marcas.drop(conteos_marcas[conteos_marcas['Marca'] == 'NOJA Power'].index, inplace=True)
+    conteos_marcas = conteos_marcas.sort_values(by='Total', ascending=False) # Ordenar en base al número de recloser con respuesta.
+
+    total_recloser=conteos_marcas['Total'].sum()
+    st.markdown(f"<p style='font-size: 24px; text-align: center; font-weight: bold;'>Recloser instalados: {total_recloser}</p>", unsafe_allow_html=True)
 
     left_column, right_column = st.columns(2)
 
@@ -236,7 +265,7 @@ if selected_tab == "1- Por fecha.":
         st.markdown(f"<p style='font-size: 18px'>     - No tienen comunicación: {no_comunicacion}</p>", unsafe_allow_html=True)
 
     with right_column:
-        st.markdown(f"<p style='font-size: 22px;  text-align: Right'>No tienen respuesta: {no_rpta}</p>", unsafe_allow_html=True)            
+        st.markdown(f"<p style='font-size: 22px;  text-align: Right'>No tienen respuesta: {total_recloser-si_rpta}</p>", unsafe_allow_html=True)            
 
     # 6° Guardar el gráfico de barras en la siguiente variable
     try:
@@ -246,16 +275,13 @@ if selected_tab == "1- Por fecha.":
         col1,col2=st.columns((2)) #Creación arreglo de gráficas (1x2)
             # 6.1.1° Recloser instalados por marcas.  
         with col1:
-            conteos_marcas = df['MARCA'].value_counts().reset_index()
-            nuevos_nombres = {"MARCA": "Marca", "count": "Total"}
-            conteos_marcas.rename(columns=nuevos_nombres, inplace=True)
             st.subheader("Recloser por marca")
             fig = px.bar(conteos_marcas, x="Marca", y="Total",
                         text=['{:,.0f} und.'.format(x) for x in conteos_marcas["Total"]],
                         template="seaborn")
                 # Configuración para mostrar el texto encima de las barras y con tamaño 24
-            fig.update_traces(textposition='outside', textfont_size=30) # Config. de las etiquetas de las barras.
-            fig.update_layout(xaxis=dict(tickangle=-45, tickfont=dict(size=15)),yaxis_range=[0, 265]) # Config. texto del eje "X"
+            fig.update_traces(textposition='outside', textfont_size=15) # Config. de las etiquetas de las barras.
+            fig.update_layout(xaxis=dict(tickangle=-45, tickfont=dict(size=15)),yaxis_range=[0, conteos_marcas['Total'].max()+30]) # Config. texto del eje "X"
             st.plotly_chart(fig, use_container_width=True, height=200)
 
             # 6.1.2° Agrupar por 'UNIDAD DE NEGOCIO' => "Nro de recloser instalados"----------------->DIAGRAMA DE PASTEL
@@ -431,6 +457,7 @@ if selected_tab == "1- Por fecha.":
         
         fig_rpta_interm = sp.make_subplots(rows=n_row_AMT, cols=n_column_AMT, column_widths=l_column_widths_AMT, row_heights=l_row_heights_AMT, vertical_spacing=0.2, horizontal_spacing=0.2)#, subplot_titles=['Subplot 1', 'Subplot 2', ...])
 
+
         # Agregar los gráficos a cada subsubplot
         grouped_aux = grouped.sort_values(by='Nro de respuestas', ascending=True).copy()
         total_filas_grouped_aux = len(grouped_aux)
@@ -443,6 +470,7 @@ if selected_tab == "1- Por fecha.":
         lista_valores = [division_entera] * n_fig_AMT
         lista_valores[-1] += residuo
 
+
         indice_inicial = 0
         for i in range(n_fig_AMT):
             col_idx = i % 2 + 1
@@ -454,6 +482,7 @@ if selected_tab == "1- Por fecha.":
             # Crea un nuevo DataFrame copiando las filas correspondientes
             df_aux = grouped.iloc[indice_inicial:limite_superior].copy()
             df_aux = df_aux.sort_values(by='Nro de intermitencias', ascending=True) # Ordenar en orden: (True)-Ascendente ; (False)-Descendente
+            # Puedes imprimir df_aux o realizar cualquier otra operación con él aquí
             
             # Actualiza el índice inicial para el próximo ciclo
             indice_inicial = limite_superior
