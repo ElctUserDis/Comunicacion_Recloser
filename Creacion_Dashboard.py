@@ -1,5 +1,4 @@
 # 1° Ingreso de módulos
-import os
 import pandas as pd #pip install pandas
 import plotly.express as px #pip install plotly-express
 import streamlit as st #pip install streamlit
@@ -22,7 +21,17 @@ n_column_AMT=2 # Número de columnas de la figura: recloser por alimentador.
 Ancho_AMT,height_AMT=8000,8000 # Dimensiones del ancho y la altura de los subplots de la figura: recloser por alimentador.
 
 name_excel='Registros.xlsx' #Ingrese el nombre del excel con extensión.
-# hoja_excel = '25-10-2023' #Hoja de excel que contendrá la base de datos.
+
+#Lista de las columnas a mostrar por defecto.
+selected_columns = ['AMT',
+                    'MARCA',
+                    'CONTROLADOR',
+                    'SECC.GIS NUEVO',
+                    'UBICACIÓN',
+                    'OPERADOR INSTALADO',
+                    'IP DEL CHIP',
+                    'Rpta actual',
+                    'Comunicación actual']
 
 #********************************************************************************************************
 # 3° Nombres de la página web.
@@ -43,8 +52,7 @@ st.sidebar.markdown("---")# Insertar una línea horizontal
 # Contenido de las pestañas
 if selected_tab == "1- Por fecha.":
     # 4° Abre el libro de Excel "Registros.xlsx"
-    direc_actual = os.path.dirname(os.path.abspath(__file__))# Ruta del directorio actual del script  
-    direc='Registros.xlsx'
+    direc=name_excel
 
     workbook = openpyxl.load_workbook(direc)
     sheet_names = []# Lista que almacenará los nombres de las hojas
@@ -179,25 +187,31 @@ if selected_tab == "1- Por fecha.":
 
     # Filtro de los campos
     with st.expander("Tabla de datos_ViewData    =====================================================================================================>  (Expandir)"):
+        selected_columns_aux=selected_columns #Crear una copia de las columnas a mostrar por defecto
+
+        #Filtrar las columnas seleccionadas por defecto, en la barra de selección.
         selected_columns = st.multiselect(
             "Seleccione el(los) campo(s) a mostrar:",
-            options=['Seleccionar todo'] + filtered_df_reinicio.columns[6:-2].tolist(), #Excluir las columnas que lo pondremos por defecto
+            options=['Seleccionar todo'] + [col for col in filtered_df_reinicio.columns if col not in selected_columns], #Excluir las columnas que lo pondremos por defecto
             default=[],
             #filtered_df_reinicio.columns[0:3].tolist()+filtered_df_reinicio.columns[9:11].tolist()+filtered_df_reinicio.columns[15:].tolist()
         )
 
         if 'Seleccionar todo' in selected_columns and len(selected_columns) > 1:
-            selected_columns.remove('Seleccionar todo') #Remover la opción seleccionar todo, si en caso marcamos otro.
+            #Remover la opción seleccionar todo, si en caso marcamos otra columna.
+            selected_columns.remove('Seleccionar todo') 
+            st.warning("'Seleccionar todo' ha sido desmarcado. Porque seleccionaste otro campo.")
 
         if 'Seleccionar todo' in selected_columns: 
-            selected_columns = filtered_df_reinicio.columns[6:-2].tolist()  #Excluir las columnas que lo pondremos por defecto
+            #Excluir las columnas que lo pondremos por defecto
+            selected_columns = [col for col in filtered_df_reinicio.columns if col not in selected_columns_aux]
 
-        #Mostrar las 4 primeras columnas y las dos últimas
-        selected_columns = filtered_df_reinicio.columns[:6].tolist() + selected_columns + filtered_df_reinicio.columns[-2:].tolist()
+        selected_columns = selected_columns + selected_columns_aux
 
-        # Reorganizar las columnas del DataFrame según el orden de selección
+        # Mostrar las columnas por defecto
         filtered_df_reinicio = filtered_df_reinicio[selected_columns]
 
+        # Reorganizar las columnas del DataFrame según el orden de selección
         column_names = filtered_df_reinicio.columns.tolist()# Lista de las columnas de la tabla de datos "filtered_df_reinicio"
         filtered_df_reinicio = filtered_df_reinicio[df.columns.intersection(column_names)]# Ordenar las columnas en base al orden del "df => Excel"
 
