@@ -279,6 +279,8 @@ if selected_tab == "1- Por fecha.":
         st.markdown(f"<p style='font-size: 18px'>     - No tienen comunicación: {no_comunicacion}</p>", unsafe_allow_html=True)
 
     with right_column:
+        if si_rpta==0:
+            si_rpta=total_recloser
         st.markdown(f"<p style='font-size: 22px;  text-align: Right'>No tienen respuesta: {total_recloser-si_rpta}</p>", unsafe_allow_html=True)            
 
     # 6° Guardar el gráfico de barras en la siguiente variable
